@@ -1,15 +1,16 @@
-const profileDataArgs = process.argv.slice(2, process.argv.length);
+// allow access to fs module
+const fs = require('fs');
+// includes the generatePage function from another js file
+const generatePage = require('./src/page-template.js');
 
-const printProfileData = profileDataArr => {
-    // This...
-    for (let i = 0; i < profileDataArr.length; i += 1) {
-      console.log(profileDataArr[i]);
-    }
-  
-    console.log('================');
-  
-    // Is the same as this...
-    profileDataArr.forEach(profileItem => console.log(profileItem));
-  };
+// skips over the file pathway info
+const profileDataArgs = process.argv.slice(2);
+// declares the first two array values as name and github variables
+const [name, github] = profileDataArgs;
 
-  printProfileData(profileDataArgs);
+// writes the file using the fs module
+fs.writeFile('index.html', generatePage(name, github), err => {
+    if (err) throw err;
+
+    console.log("Porfolio complete! Check out index.html to see the output!");
+});
