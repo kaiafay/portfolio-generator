@@ -142,7 +142,7 @@ promptUser()
   .then(promptProject)
   .then(portfolioData => {
     const pageHTML = generatePage(portfolioData);
-
+    // writes the HTML template to a file
     fs.writeFile('./index.html', pageHTML, err => {
       if (err) throw new Error(err);
 
