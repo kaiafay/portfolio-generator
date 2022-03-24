@@ -1,5 +1,9 @@
+// allow access to fs module
+const fs = require('fs');
 // allow access to inquirer package
 const inquirer = require('inquirer');
+// includes the generatePage function from another js file
+const generatePage = require('./src/page-template.js');
 
 // arrow function that prompts user for info
 const promptUser = () => {
@@ -123,6 +127,7 @@ const promptProject = portfolioData => {
             default: false
         }
     ])
+    // allows user to input multiple projects in a row
     .then(projectData => {
         portfolioData.projects.push(projectData);
         if (projectData.confirmAddProject) {
@@ -133,24 +138,14 @@ const promptProject = portfolioData => {
       });
 };
 
-// store and console.log answers
 promptUser()
   .then(promptProject)
   .then(portfolioData => {
-    console.log(portfolioData);
+    const pageHTML = generatePage(portfolioData);
+
+    fs.writeFile('./index.html', pageHTML, err => {
+      if (err) throw new Error(err);
+
+      console.log('Page created! Check out index.html in this directory to see it!');
+    });
   });
-    
-// // allow access to fs module
-// const fs = require('fs');
-// // includes the generatePage function from another js file
-// const generatePage = require('./src/page-template.js');
-
-// // set function to a variable
-// const pageHTML = generatePage(name, github);
-
-// // writes the file using the fs module
-// fs.writeFile('index.html', pageHTML, err => {
-//     if (err) throw err;
-
-//     console.log("Porfolio complete! Check out index.html to see the output!");
-// });
