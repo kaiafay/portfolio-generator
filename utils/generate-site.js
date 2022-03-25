@@ -37,3 +37,7 @@ const copyFile = () => {
         });
     });
 };
+
+// export write file and copy file functions
+// uses shorthand property names since the name and value are the same
+module.exports = { writeFile, copyFile };

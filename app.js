@@ -1,5 +1,5 @@
-// allow access to fs module
-const fs = require('fs');
+// import the write file and copy file functions
+const { writeFile, copyFile} = require('./utils/generate-site.js');
 // allow access to inquirer package
 const inquirer = require('inquirer');
 // includes the generatePage function from another js file
