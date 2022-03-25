@@ -141,22 +141,20 @@ const promptProject = portfolioData => {
 promptUser()
   .then(promptProject)
   .then(portfolioData => {
-    const pageHTML = generatePage(portfolioData);
-    // writes the HTML template to a file
-    fs.writeFile('./dist/index.html', pageHTML, err => {
-      if (err) {
-          console.log(err);
-          return;
-      }
-      console.log('Page created! Check out index.html in this directory to see it!');
-
-      //   copy file to dist folder for final product
-      fs.copyFile('./src/style.css', './dist/style.css', err => {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        console.log('Style sheet copied successfully!');
-      });
-    });
+    return generatePage(portfolioData);
+  })
+//   writes file page
+  .then(pageHTML => {
+    return writeFile(pageHTML);
+  })
+  .then(writeFileResponse => {
+    console.log(writeFileResponse);
+    return copyFile();
+  })
+//   copies file
+  .then(copyFileResponse => {
+    console.log(copyFileResponse);
+  })
+  .catch(err => {
+    console.log(err);
   });
